@@ -1,0 +1,24 @@
+{
+  "name": "@table-q/root",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/units",
+    "packages/units-plugin-bignumber"
+  ],
+  "scripts": {
+    "bootstrap": "npx nx run-many -t install",
+    "build": "npx nx run-many -t build",
+    "ci": "npx nx run-many -t ci",
+    "format": "npx nx run-many -t format",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npx nx run-many -t ci && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "0.6.0",
+    "@changesets/cli": "2.31.0",
+    "npm-run-all": "4.1.5",
+    "nx": "22.6.5"
+  }
+}

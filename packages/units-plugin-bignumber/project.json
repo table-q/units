@@ -1,0 +1,27 @@
+{
+  "name": "@table-q/units-plugin-bignumber",
+  "root": "packages/units-plugin-bignumber",
+  "sourceRoot": "packages/units-plugin-bignumber/src",
+  "implicitDependencies": ["@table-q/units"],
+  "targets": {
+    "build": {
+      "command": "npm run build",
+      "options": {
+        "cwd": "packages/units-plugin-bignumber"
+      }
+    },
+    "format": {
+      "command": "npm run format",
+      "options": {
+        "cwd": "packages/units-plugin-bignumber"
+      }
+    },
+    "ci": {
+      "command": "npm run ci",
+      "options": {
+        "cwd": "packages/units-plugin-bignumber"
+      },
+      "dependsOn": ["@table-q/units:ci"]
+    }
+  }
+}

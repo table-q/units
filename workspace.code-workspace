@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"name": "Root",
+			"path": "."
+		},
+		{
+			"name": "Units",
+			"path": "packages/units"
+		},
+		{
+			"name": "Units Plugin Bignumber",
+			"path": "packages/units-plugin-bignumber"
+		},
+		{
+			"name": "Examples / Simple Math",
+			"path": "packages/examples/simple_math"
+		},
+		{
+			"name": "Docs",
+			"path": "packages/docs"
+		}
+	],
+	"settings": {
+		"search.exclude": {
+			"**/node_modules": true,
+			"**/coverage": true,
+			"**/dist": true
+		}
+	}
+}
