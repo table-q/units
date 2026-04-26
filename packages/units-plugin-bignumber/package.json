@@ -16,6 +16,16 @@
     "README.md",
     "LICENSE"
   ],
+  "keywords": [
+    "bigint",
+    "bignumber",
+    "exact-arithmetic",
+    "financial",
+    "math",
+    "plugin",
+    "sqrt",
+    "units"
+  ],
   "sideEffects": true,
   "engines": {
     "node": ">=18"

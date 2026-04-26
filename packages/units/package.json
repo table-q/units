@@ -16,6 +16,18 @@
     "README.md",
     "LICENSE"
   ],
+  "keywords": [
+    "bigint",
+    "rational",
+    "exact-arithmetic",
+    "financial",
+    "math",
+    "money",
+    "currency",
+    "units",
+    "rounding",
+    "precision"
+  ],
   "sideEffects": false,
   "engines": {
     "node": ">=18"
