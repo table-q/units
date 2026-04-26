@@ -1,6 +1,6 @@
 {
   "name": "@table-q/units-plugin-bignumber",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "type": "module",
   "types": "dist/index.d.ts",
@@ -42,7 +42,7 @@
     "ci": "npm-run-all check:lint check:types test build"
   },
   "peerDependencies": {
-    "@table-q/units": "^1.0.0"
+    "@table-q/units": "^1.0.1"
   },
   "dependencies": {
     "bignumber.js": "11.0.0",
