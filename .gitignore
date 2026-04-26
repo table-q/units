@@ -1,0 +1,8 @@
+node_modules
+coverage
+dist
+.nx
+packages/docs/build
+packages/docs/.docusaurus
+packages/docs/.cache-loader
+packages/docs/docs/**/api

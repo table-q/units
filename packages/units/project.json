@@ -1,0 +1,26 @@
+{
+  "name": "@table-q/units",
+  "root": "packages/units",
+  "sourceRoot": "packages/units/src",
+  "targets": {
+    "build": {
+      "command": "npm run build",
+      "options": {
+        "cwd": "packages/units"
+      }
+    },
+    "format": {
+      "command": "npm run format",
+      "options": {
+        "cwd": "packages/units"
+      },
+      "cache": false
+    },
+    "ci": {
+      "command": "npm run ci",
+      "options": {
+        "cwd": "packages/units"
+      }
+    }
+  }
+}

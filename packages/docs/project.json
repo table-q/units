@@ -1,0 +1,39 @@
+{
+  "name": "@table-q/docs",
+  "root": "packages/docs",
+  "sourceRoot": "packages/docs",
+  "implicitDependencies": ["@table-q/units", "@table-q/units-plugin-bignumber"],
+  "targets": {
+    "install": {
+      "command": "npm install",
+      "options": {
+        "cwd": "packages/docs"
+      }
+    },
+    "serve": {
+      "command": "npm run serve",
+      "options": {
+        "cwd": "packages/docs"
+      }
+    },
+    "ci": {
+      "command": "npm run ci",
+      "options": {
+        "cwd": "packages/docs"
+      },
+      "dependsOn": ["@table-q/units:ci"]
+    },
+    "format": {
+      "command": "npm run format",
+      "options": {
+        "cwd": "packages/docs"
+      }
+    },
+    "build": {
+      "command": "npm run build",
+      "options": {
+        "cwd": "packages/docs"
+      }
+    }
+  }
+}

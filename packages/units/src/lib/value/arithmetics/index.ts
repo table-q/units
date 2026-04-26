@@ -1,0 +1,13 @@
+export { abs } from 'value/arithmetics/abs/abs';
+export { add } from 'value/arithmetics/add/add';
+export { cmp, eq, gt, gte, lt, lte, max, min, neq } from 'value/arithmetics/cmp/cmp';
+export { convert } from 'value/arithmetics/convert/convert';
+export { distribute } from 'value/arithmetics/distribute/distribute';
+export { div } from 'value/arithmetics/div/div';
+export { mod } from 'value/arithmetics/mod/mod';
+export { mul } from 'value/arithmetics/mul/mul';
+export { percent } from 'value/arithmetics/percent/percent';
+export { pow } from 'value/arithmetics/pow/pow';
+export { scale } from 'value/arithmetics/scale/scale';
+export { sub } from 'value/arithmetics/sub/sub';
+export { toScalar } from 'value/toScalar';
