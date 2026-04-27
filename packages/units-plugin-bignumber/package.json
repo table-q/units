@@ -2,6 +2,12 @@
   "name": "@table-q/units-plugin-bignumber",
   "version": "1.0.1",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/table-q/units.git",
+    "directory": "packages/units-plugin-bignumber"
+  },
+  "homepage": "https://table-q.github.io/units/",
   "type": "module",
   "types": "dist/index.d.ts",
   "exports": {
