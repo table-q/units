@@ -1,5 +1,14 @@
 # @table-q/units-plugin-bignumber
 
+## 1.0.2
+
+### Patch Changes
+
+- [`3a540ca`](https://github.com/table-q/units/commit/3a540ca06d643c3f852eed7d1bc9dd515164dfff) Thanks [@artit-io](https://github.com/artit-io)! - Added repository and homepage links to package.json for npm page
+
+- Updated dependencies [[`3a540ca`](https://github.com/table-q/units/commit/3a540ca06d643c3f852eed7d1bc9dd515164dfff)]:
+  - @table-q/units@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
