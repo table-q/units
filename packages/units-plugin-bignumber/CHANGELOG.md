@@ -1,5 +1,14 @@
 # @table-q/units-plugin-bignumber
 
+## 1.0.3
+
+### Patch Changes
+
+- [`b71ad32`](https://github.com/table-q/units/commit/b71ad32403e97a401ea12811f74b77e604738fb3) Thanks [@artit-io](https://github.com/artit-io)! - - Add CommonJS build output via tsup (`format: ['esm', 'cjs']`)
+
+- Updated dependencies [[`b71ad32`](https://github.com/table-q/units/commit/b71ad32403e97a401ea12811f74b77e604738fb3)]:
+  - @table-q/units@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

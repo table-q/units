@@ -1,5 +1,14 @@
 # @table-q/units
 
+## 1.0.3
+
+### Patch Changes
+
+- [`b71ad32`](https://github.com/table-q/units/commit/b71ad32403e97a401ea12811f74b77e604738fb3) Thanks [@artit-io](https://github.com/artit-io)! - - Add CommonJS build output via tsup (`format: ['esm', 'cjs']`)
+  - Add `unit.parse()` method for parsing dynamic string/number inputs with rounding
+  - `value.convert()` can receive `SCALAR` values
+  - `value.between()` method
+
 ## 1.0.2
 
 ### Patch Changes
