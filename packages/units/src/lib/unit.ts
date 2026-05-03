@@ -69,7 +69,7 @@ export interface Unit<
     value: string | number | bigint | Value<Signed, U, Decimals>,
     bigInt?: boolean,
   ): Value<Signed, U, Decimals>;
-  fromBigInt(value: bigint | string | number): Value<SignedParam, U>;
+  fromBigInt(value: bigint | string | number): Value<SignedParam, U, Decimals>;
   clone<CloneSigned extends SignedParam, CloneU extends UNIT, CloneDecimals extends number>(
     props?: Partial<Context<SignedBool<CloneSigned>, CloneU, CloneDecimals>>,
   ): Unit<CloneSigned, CloneU, CloneDecimals>;
@@ -113,10 +113,20 @@ function createUnitInstance<Signed extends SignedParam, U extends UNIT, Decimals
       return createValueInstance(value as string, unit, bigInt);
     },
     fromBigInt(value) {
-      if (typeof value === 'number' && Math.abs(value) > Number.MAX_SAFE_INTEGER) {
-        throw Errors.INVALID_TYPE('value', 'safe integer');
+      if (typeof value === 'bigint') {
+        return createValueInstance(value, unit, true);
       }
-      return createValueInstance(String(value), unit, true);
+      if (typeof value === 'number') {
+        if (Math.abs(value) > Number.MAX_SAFE_INTEGER) {
+          throw Errors.INVALID_TYPE('value', 'safe integer');
+        }
+        return createValueInstance(BigInt(value), unit, true);
+      }
+      try {
+        return createValueInstance(BigInt(value), unit, true);
+      } catch {
+        throw Errors.INVALID_TYPE('value', 'bigint');
+      }
     },
     clone(cloneProps = {}) {
       return createUnitInstance({
@@ -164,6 +174,12 @@ function createUnit<
     writable: false,
     enumerable: true,
     value: (value: bigint | string | number) => unit.fromBigInt(value),
+  });
+  Object.defineProperty(ret, 'parse', {
+    writable: false,
+    enumerable: true,
+    value: (value: string | number, roundingMode?: ROUNDING_MODE, roundingDecimalPlaces = 0) =>
+      ret(String(value) as Numeric, roundingMode, roundingDecimalPlaces),
   });
   Object.defineProperty(ret, 'kind', {
     writable: false,
@@ -219,6 +235,11 @@ function createUnit<
     kind: _U;
     unit: Unit<_Signed, _U, _Decimals>;
     fromBigInt: (value: bigint | string | number) => Value<_Signed, _U, _Decimals>;
+    parse: (
+      value: string | number,
+      roundingMode?: ROUNDING_MODE,
+      roundingDecimalPlaces?: number,
+    ) => Value<_Signed, _U, _Decimals>;
     readonly minValue: Value<_Signed, _U, _Decimals>;
     readonly maxValue: Value<_Signed, _U, _Decimals>;
     clone<
@@ -239,3 +260,7 @@ export const SCALAR = createUnit({
   precision: Number.POSITIVE_INFINITY,
   signed: true,
 });
+
+export type ValueOf<T extends (...args: never[]) => Value> = ReturnType<T>;
+
+export type SCALAR = ValueOf<typeof SCALAR>;

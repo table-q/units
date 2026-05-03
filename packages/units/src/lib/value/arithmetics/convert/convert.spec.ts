@@ -1,3 +1,4 @@
+import { SCALAR } from 'unit';
 import { Errors } from 'util/errors';
 import { EUR, GBP, PHP, PRECISE_GBP, UNSIGNED_GBP } from 'value/arithmetics/testTypes';
 
@@ -57,5 +58,24 @@ describe('convert()', () => {
 
   it('should allow converting unsigned to signed', () => {
     expect(UNSIGNED_GBP('5').convert(GBP, '-1')).toBeUnit('-5');
+  });
+
+  it('should accept a Scalar value as the rate', () => {
+    expect(GBP('10').convert(EUR, SCALAR('1.2'))).toBeUnit('12.00');
+    expect(GBP('10').convert(PHP, SCALAR('300.1'))).toBeUnit('3001');
+    expect(GBP('10').convert(EUR, SCALAR('1/2'))).toBeUnit('5.00');
+  });
+
+  it('should not mutate a Scalar rate passed in', () => {
+    const rate = SCALAR('1.2');
+    GBP('10').convert(PRECISE_GBP, rate);
+    expect(rate).toBeUnit('1.2');
+  });
+
+  it('should throw when a non-SCALAR value is passed as rate', () => {
+    // @ts-expect-error rate must be Numeric or Scalar
+    expect(() => GBP('10').convert(EUR, GBP('1.2'))).toThrow(
+      Errors.INVALID_TYPE('value', 'SCALAR'),
+    );
   });
 });

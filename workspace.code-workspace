@@ -14,7 +14,11 @@
 		},
 		{
 			"name": "Examples / Simple Math",
-			"path": "packages/examples/simple_math"
+			"path": "packages/examples/simple-math"
+		},
+		{
+			"name": "Examples / UK Tax",
+			"path": "packages/examples/uk-tax"
 		},
 		{
 			"name": "Docs",

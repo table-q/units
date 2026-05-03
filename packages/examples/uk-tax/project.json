@@ -1,0 +1,27 @@
+{
+  "name": "@table-q/units-examples-uk-tax",
+  "root": "packages/examples/uk-tax",
+  "sourceRoot": "packages/examples/uk-tax/src",
+  "implicitDependencies": ["@table-q/units"],
+  "targets": {
+    "install": {
+      "command": "npm install",
+      "options": {
+        "cwd": "packages/examples/uk-tax"
+      }
+    },
+    "format": {
+      "command": "npm run format",
+      "options": {
+        "cwd": "packages/examples/uk-tax"
+      }
+    },
+    "ci": {
+      "command": "npm run ci",
+      "options": {
+        "cwd": "packages/examples/uk-tax"
+      },
+      "dependsOn": ["@table-q/units:ci"]
+    }
+  }
+}

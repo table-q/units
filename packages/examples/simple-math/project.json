@@ -1,25 +1,25 @@
 {
   "name": "@table-q/units-examples-simple-math",
-  "root": "packages/examples/simple_math",
-  "sourceRoot": "packages/examples/simple_math/src",
+  "root": "packages/examples/simple-math",
+  "sourceRoot": "packages/examples/simple-math/src",
   "implicitDependencies": ["@table-q/units", "@table-q/units-plugin-bignumber"],
   "targets": {
     "install": {
       "command": "npm install",
       "options": {
-        "cwd": "packages/examples/simple_math"
+        "cwd": "packages/examples/simple-math"
       }
     },
     "format": {
       "command": "npm run format",
       "options": {
-        "cwd": "packages/examples/simple_math"
+        "cwd": "packages/examples/simple-math"
       }
     },
     "ci": {
       "command": "npm run ci",
       "options": {
-        "cwd": "packages/examples/simple_math"
+        "cwd": "packages/examples/simple-math"
       },
       "dependsOn": ["@table-q/units-plugin-bignumber:ci"]
     }

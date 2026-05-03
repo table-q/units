@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-export { SCALAR } from 'unit';
+export { SCALAR, type ValueOf } from 'unit';
 export { ErrorCode } from 'util/errors';
 export { toBeUnit } from 'util/jest';
 export type { Value } from 'value';

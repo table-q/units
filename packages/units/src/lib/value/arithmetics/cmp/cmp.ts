@@ -16,6 +16,7 @@ declare module '@table-q/units' {
     neq(value: Numeric | Value<SignedParam, U>): boolean;
     min(value: Numeric | Value<SignedParam, U>): Value<Signed, U, Decimals>;
     max(value: Numeric | Value<SignedParam, U>): Value<Signed, U, Decimals>;
+    between(min: Numeric | Value<SignedParam, U>, max: Numeric | Value<SignedParam, U>): boolean;
   }
 }
 
@@ -108,6 +109,14 @@ export function max<Signed extends SignedParam, U extends UNIT, Decimals extends
   return value.scale(useContext(this).decimals) as Value<Signed, U, Decimals>;
 }
 
+export function between<Signed extends SignedParam, U extends UNIT, Decimals extends number>(
+  this: Value<Signed, U, Decimals>,
+  min: Numeric | Value<SignedParam, U>,
+  max: Numeric | Value<SignedParam, U>,
+): boolean {
+  return this.gte(min) && this.lte(max);
+}
+
 export function extend(proto: Value) {
   proto.cmp = function (value) {
     return cmp.apply(this, [value]);
@@ -135,5 +144,8 @@ export function extend(proto: Value) {
   };
   proto.max = function (value) {
     return max.apply(this, [value]);
+  };
+  proto.between = function (min, max) {
+    return between.apply(this, [min, max]);
   };
 }

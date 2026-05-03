@@ -11,7 +11,10 @@ function initData<Signed extends SignedParam, U extends UNIT, Decimals extends n
   return { numerator: 0n, denominator: 1n, unit };
 }
 
-function fromBigIntString(value: string): [bigint, bigint] {
+function fromBigInt(value: string | bigint): [bigint, bigint] {
+  if (typeof value === 'bigint') {
+    return [value, 1n];
+  }
   try {
     return [BigInt(value), 1n];
   } catch {
@@ -127,16 +130,16 @@ function parseString(value: string, unitDecimals: number): [bigint, bigint] {
 
 export function construct<Signed extends SignedParam, U extends UNIT, Decimals extends number>(
   this: Value<Signed, U, Decimals>,
-  value: string | Value<Signed, U>,
+  value: string | bigint | Value<Signed, U>,
   unit: Unit<Signed, U, Decimals>,
   isBigInt: boolean,
 ): Value<Signed, U, Decimals> {
   this[_d] = initData(unit);
   const data = useMutableValue(this);
   if (isBigInt) {
-    [data.numerator, data.denominator] = fromBigIntString(value as string);
+    [data.numerator, data.denominator] = fromBigInt(value as string | bigint);
   } else if (!isString(value)) {
-    [data.numerator, data.denominator] = fromValue(this, value);
+    [data.numerator, data.denominator] = fromValue(this, value as Value<Signed, U>);
   } else {
     [data.numerator, data.denominator] = parseString(value, this.decimals());
   }

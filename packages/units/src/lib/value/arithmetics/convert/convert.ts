@@ -1,8 +1,8 @@
 import type { UNIT, Unit } from 'unit';
 import { SCALAR, type SignedParam, type SignedTypeInverse } from 'unit';
 import { Errors } from 'util/errors';
-import type { Numeric } from 'util/helpers';
-import type { Value } from 'value';
+import { isString, type Numeric } from 'util/helpers';
+import type { Scalar, Value } from 'value';
 import { cleanup } from 'value/cleanup';
 import { useContext, useMutableValue, useValue } from 'value/hooks';
 import type { ROUNDING_MODE } from 'value/rounding/rounding';
@@ -19,7 +19,7 @@ declare module '@table-q/units' {
   interface Value<Signed, U, Decimals> {
     convert<ToSigned extends SignedTypeInverse<Signed>, To extends UNIT, ToDecimals extends number>(
       To: ValueConstructor<ToSigned, To, ToDecimals>,
-      rate?: Numeric,
+      rate?: Numeric | Scalar,
     ): Value<ToSigned, To, ToDecimals>;
   }
 }
@@ -34,11 +34,19 @@ export function convert<
 >(
   this: Value<Signed, U, Decimals>,
   To: ValueConstructor<ToSigned, To, ToDecimals>,
-  rate: Numeric,
+  rate: Numeric | Scalar,
 ): Value<ToSigned, To, ToDecimals> {
   const toUnit = To.unit;
   const decimals: number = useContext(this).decimals;
-  const param = SCALAR(rate);
+  let param: Scalar;
+  if (isString(rate)) {
+    param = SCALAR(rate);
+  } else {
+    if (useContext(rate).kind !== 'SCALAR') {
+      throw Errors.INVALID_TYPE('value', 'SCALAR');
+    }
+    param = rate.clone();
+  }
   const ret = toUnit.createValue('0');
   if (useContext(this).signed && !useContext(ret).signed) {
     throw Errors.INVALID_CONVERSION('SIGNED', 'UNSIGNED');
@@ -68,7 +76,7 @@ export function extend(proto: Value) {
   proto.convert = function (
     this: Value,
     To: ValueConstructor<SignedParam, UNIT, number>,
-    rate: Numeric = '1',
+    rate: Numeric | Scalar = '1',
   ) {
     return convert.apply(this, [To, rate]);
   } as Value['convert'];

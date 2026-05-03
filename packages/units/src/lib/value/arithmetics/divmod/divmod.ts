@@ -8,14 +8,14 @@ import { useContext, useMutableValue, useValue } from 'value/hooks';
 
 declare module '@table-q/units' {
   interface Value<Signed, U, Decimals> {
-    mod(value: Numeric | Scalar): Value<Signed, U, Decimals>;
+    divmod(value: Numeric | Scalar): [Value<Signed, U, Decimals>, Value<Signed, U, Decimals>];
   }
 }
 
-export function mod<Signed extends SignedParam, U extends UNIT, Decimals extends number>(
+export function divmod<Signed extends SignedParam, U extends UNIT, Decimals extends number>(
   this: Value<Signed, U, Decimals>,
   value: Numeric | Scalar,
-): Value<Signed, U, Decimals> {
+): [Value<Signed, U, Decimals>, Value<Signed, U, Decimals>] {
   const { decimals, signed } = useContext(this);
   let param = value as Scalar;
   if (!isString(param)) {
@@ -25,7 +25,7 @@ export function mod<Signed extends SignedParam, U extends UNIT, Decimals extends
   } else {
     param = SCALAR(value);
   }
-  const { numerator, denominator } = useValue(this);
+  const { numerator, denominator, unit } = useValue(this);
   const { numerator: pNumerator, denominator: pDenominator } = useValue(param);
   if (pNumerator === 0n) {
     throw Errors.DIVISION_BY_ZERO();
@@ -34,16 +34,20 @@ export function mod<Signed extends SignedParam, U extends UNIT, Decimals extends
   if (!signed && negative) {
     throw Errors.INVALID_CONVERSION('SIGNED', 'UNSIGNED');
   }
+  const n = numerator * pDenominator;
+  const d = denominator * pNumerator;
   const scale = 10n ** BigInt(decimals);
-  const ret = this.clone();
-  const r = useMutableValue(ret);
-  r.numerator = (numerator * pDenominator) % (denominator * pNumerator * scale);
+  const q = n / (d * scale);
+  const quotient = unit.fromBigInt(q * scale);
+  const remainder = this.clone();
+  const r = useMutableValue(remainder);
+  r.numerator = numerator * pDenominator - q * pNumerator * denominator * scale;
   r.denominator = denominator * pDenominator;
-  return cleanup(ret);
+  return [quotient, cleanup(remainder)];
 }
 
 export function extend(proto: Value) {
-  proto.mod = function (value) {
-    return mod.apply(this, [value]);
+  proto.divmod = function (value) {
+    return divmod.apply(this, [value]);
   };
 }

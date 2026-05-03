@@ -259,4 +259,29 @@ describe('Unit', () => {
       expect(GBP32.maxValue instanceof GBP32).toBe(true);
     });
   });
+
+  describe('parse', () => {
+    it('should accept an arbitrary string and parse a decimal', () => {
+      const s: string = '1.50';
+      const GBP = SCALAR.clone({ ...defaultParams, kind: 'GBP' });
+      expect(GBP.parse(s)).toBeUnit('1.50');
+    });
+
+    it('should parse a fraction string', () => {
+      const s: string = '3/4';
+      const GBP = SCALAR.clone({ ...defaultParams, kind: 'GBP' });
+      expect(GBP.parse(s)).toBeUnit('0.75');
+    });
+
+    it('should throw on unparseable input', () => {
+      const GBP = SCALAR.clone({ ...defaultParams, kind: 'GBP' });
+      expect(() => GBP.parse('500L')).toThrow();
+    });
+
+    it('should accept a finite number', () => {
+      const GBP = SCALAR.clone({ ...defaultParams, kind: 'GBP' });
+      expect(GBP.parse(42)).toBeUnit('42.00');
+      expect(GBP.parse(1.5)).toBeUnit('1.50');
+    });
+  });
 });

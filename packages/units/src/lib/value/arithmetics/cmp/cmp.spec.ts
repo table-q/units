@@ -210,3 +210,34 @@ describe('max()', () => {
     expect(a).toBeUnit('3');
   });
 });
+
+describe('between()', () => {
+  it('should return true when value lies inside the range', () => {
+    expect(GBP('5').between('1', '10')).toBe(true);
+  });
+  it('should be inclusive on the lower bound', () => {
+    expect(GBP('1').between('1', '10')).toBe(true);
+  });
+  it('should be inclusive on the upper bound', () => {
+    expect(GBP('10').between('1', '10')).toBe(true);
+  });
+  it('should return false below the lower bound', () => {
+    expect(GBP('0.99').between('1', '10')).toBe(false);
+  });
+  it('should return false above the upper bound', () => {
+    expect(GBP('10.01').between('1', '10')).toBe(false);
+  });
+  it('should accept Value bounds of the same kind', () => {
+    expect(GBP('5').between(GBP('1'), GBP('10'))).toBe(true);
+    expect(GBP('11').between(GBP('1'), GBP('10'))).toBe(false);
+  });
+  it('should throw on a bound of a different kind', () => {
+    // @ts-expect-error cross-kind bound
+    expect(() => GBP('5').between(EUR('1'), '10')).toThrow(Errors.INVALID_TYPE('value', 'GBP'));
+    // @ts-expect-error cross-kind bound
+    expect(() => GBP('5').between('1', EUR('10'))).toThrow(Errors.INVALID_TYPE('value', 'GBP'));
+  });
+  it('should return false for a degenerate range where min > max', () => {
+    expect(GBP('5').between('10', '1')).toBe(false);
+  });
+});

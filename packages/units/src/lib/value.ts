@@ -6,6 +6,7 @@ import { extend as extendCmp } from 'value/arithmetics/cmp/cmp';
 import { extend as extendConvert } from 'value/arithmetics/convert/convert';
 import { extend as extendDistribute } from 'value/arithmetics/distribute/distribute';
 import { extend as extendDiv } from 'value/arithmetics/div/div';
+import { extend as extendDivmod } from 'value/arithmetics/divmod/divmod';
 import { extend as extendMod } from 'value/arithmetics/mod/mod';
 import { extend as extendMul } from 'value/arithmetics/mul/mul';
 import { extend as extendPercent } from 'value/arithmetics/percent/percent';
@@ -62,7 +63,7 @@ export function createValueInstance<
   U extends UNIT,
   Decimals extends number,
 >(
-  value: string | Value<Signed, U>,
+  value: string | bigint | Value<Signed, U>,
   unit: Unit<Signed, U, Decimals>,
   isBigInt: boolean,
 ): Value<Signed, U, Decimals> {
@@ -84,6 +85,7 @@ extendMul(proto);
 extendDiv(proto);
 extendPercent(proto);
 extendMod(proto);
+extendDivmod(proto);
 extendCmp(proto);
 extendPow(proto);
 extendScale(proto);

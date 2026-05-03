@@ -22,6 +22,10 @@ console.log(total.toDecimal('ROUND_HALF_UP')); // '23.99'
 
 // Exact fractions — no precision loss
 GBP('1').div('3').mul('3').eq('1'); // true
+
+// Handling dynamic input
+const userAmount: string | number = getUserInput();
+const value = GBP.parse(userAmount);
 ```
 
 ## Features
